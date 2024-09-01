@@ -29,9 +29,9 @@ tsl::elm::Element* MainMenu::createUI()
 
     this->enabledBtn->setStateChangedListener([this](bool state)
     {
-		if (state)
+	    if (state)
         {
-            //CreateB2F();
+            CreateB2F();
             const NcmProgramLocation programLocation{
                 .program_id = SysFanControlID,
                 .storageID = NcmStorageId_None,
@@ -42,7 +42,7 @@ tsl::elm::Element* MainMenu::createUI()
 		}
         else
         {
-            //RemoveB2F();
+            RemoveB2F();
             pmshellTerminateProgram(SysFanControlID);
             return true;
         }
@@ -53,7 +53,7 @@ tsl::elm::Element* MainMenu::createUI()
     list->addItem(new tsl::elm::CategoryHeader("Fan Curve", true));
     this->p0Label->setClickListener([this](uint64_t keys)
     {
-		if (keys & HidNpadButton_A) 
+	    if (keys & HidNpadButton_A) 
         {
 			tsl::changeTo<SelectMenu>(0, this->fanCurveTable);
 			return true;
@@ -64,7 +64,7 @@ tsl::elm::Element* MainMenu::createUI()
 
     this->p1Label->setClickListener([this](uint64_t keys)
     {
-		if (keys & HidNpadButton_A) 
+	    if (keys & HidNpadButton_A) 
         {
 			tsl::changeTo<SelectMenu>(1, this->fanCurveTable);
 			return true;
@@ -86,7 +86,7 @@ tsl::elm::Element* MainMenu::createUI()
 
     this->p3Label->setClickListener([this](uint64_t keys)
     {
-		if (keys & HidNpadButton_A) 
+	    if (keys & HidNpadButton_A) 
         {
 		    tsl::changeTo<SelectMenu>(3, this->fanCurveTable);
 			return true;
@@ -97,7 +97,7 @@ tsl::elm::Element* MainMenu::createUI()
 
     this->p4Label->setClickListener([this](uint64_t keys)
     {
-		if (keys & HidNpadButton_A) 
+	    if (keys & HidNpadButton_A) 
         {
 				tsl::changeTo<SelectMenu>(4, this->fanCurveTable);
 				return true;
