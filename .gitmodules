@@ -1,0 +1,6 @@
+[submodule "overlay/lib/libtesla"]
+	path = overlay/lib/libtesla
+	url = https://github.com/WerWolv/libtesla
+[submodule "lib/libfancontrol"]
+	path = lib/libfancontrol
+	url = https://github.com/Zathawo/libfancontrol
