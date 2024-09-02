@@ -3,15 +3,16 @@
 
 class SelectMenu : public tsl::Gui {
 private:
-    int i = 0;
-    TemperaturePoint *fanCurveTable;
+    int _i = 0;
+    TemperaturePoint* _fanCurveTable;
+    bool* _tableIsChanged;
 
-    tsl::elm::CategoryHeader *tempLabel;
-    tsl::elm::CategoryHeader *fanLabel;
-    tsl::elm::ListItem *saveBtn;
+    tsl::elm::CategoryHeader* _tempLabel;
+    tsl::elm::CategoryHeader* _fanLabel;
+    tsl::elm::ListItem* _saveBtn;
 
 public:
-    SelectMenu(int i, TemperaturePoint *tps);
+    SelectMenu(int i, TemperaturePoint *tps, bool* tableIsChanged);
 
     virtual tsl::elm::Element* createUI() override;
 };

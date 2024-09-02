@@ -5,15 +5,16 @@
 class MainMenu : public tsl::Gui 
 {
 private:
-    TemperaturePoint *fanCurveTable;
+    TemperaturePoint* _fanCurveTable;
+    bool _tableIsChanged;
 
-    tsl::elm::ToggleListItem *enabledBtn;
+    tsl::elm::ToggleListItem* _enabledBtn;
 
-    tsl::elm::ListItem *p0Label;
-    tsl::elm::ListItem *p1Label;
-    tsl::elm::ListItem *p2Label;
-    tsl::elm::ListItem *p3Label;
-    tsl::elm::ListItem *p4Label;
+    tsl::elm::ListItem* _p0Label;
+    tsl::elm::ListItem* _p1Label;
+    tsl::elm::ListItem* _p2Label;
+    tsl::elm::ListItem* _p3Label;
+    tsl::elm::ListItem* _p4Label;
 
 public:
     MainMenu();

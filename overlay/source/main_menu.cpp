@@ -3,31 +3,33 @@
 
 MainMenu::MainMenu()
 {
-    ReadConfigFile(&(this->fanCurveTable));
+    ReadConfigFile(&this->_fanCurveTable);
 
-    this->p0Label = new tsl::elm::ListItem("P0: " + std::to_string(this->fanCurveTable->temperature_c) + "C | " + std::to_string((int)(this->fanCurveTable->fanLevel_f * 100)) + "%");
-    this->p1Label = new tsl::elm::ListItem("P1: " + std::to_string((this->fanCurveTable + 1)->temperature_c) + "C | " + std::to_string((int)((this->fanCurveTable + 1)->fanLevel_f * 100)) + "%");
-    this->p2Label = new tsl::elm::ListItem("P2: " + std::to_string((this->fanCurveTable + 2)->temperature_c) + "C | " + std::to_string((int)((this->fanCurveTable + 2)->fanLevel_f * 100)) + "%");
-    this->p3Label = new tsl::elm::ListItem("P3: " + std::to_string((this->fanCurveTable + 3)->temperature_c) + "C | " + std::to_string((int)((this->fanCurveTable + 3)->fanLevel_f * 100)) + "%");
-    this->p4Label = new tsl::elm::ListItem("P4: " + std::to_string((this->fanCurveTable + 4)->temperature_c) + "C | " + std::to_string((int)((this->fanCurveTable + 4)->fanLevel_f * 100)) + "%");
+    this->_p0Label = new tsl::elm::ListItem("P0: " + std::to_string(this->_fanCurveTable->temperature_c) + "C | " + std::to_string((int)(this->_fanCurveTable->fanLevel_f * 100)) + "%");
+    this->_p1Label = new tsl::elm::ListItem("P1: " + std::to_string((this->_fanCurveTable + 1)->temperature_c) + "C | " + std::to_string((int)((this->_fanCurveTable + 1)->fanLevel_f * 100)) + "%");
+    this->_p2Label = new tsl::elm::ListItem("P2: " + std::to_string((this->_fanCurveTable + 2)->temperature_c) + "C | " + std::to_string((int)((this->_fanCurveTable + 2)->fanLevel_f * 100)) + "%");
+    this->_p3Label = new tsl::elm::ListItem("P3: " + std::to_string((this->_fanCurveTable + 3)->temperature_c) + "C | " + std::to_string((int)((this->_fanCurveTable + 3)->fanLevel_f * 100)) + "%");
+    this->_p4Label = new tsl::elm::ListItem("P4: " + std::to_string((this->_fanCurveTable + 4)->temperature_c) + "C | " + std::to_string((int)((this->_fanCurveTable + 4)->fanLevel_f * 100)) + "%");
 
     if (IsRunning() != 0)
     {
-        this->enabledBtn = new tsl::elm::ToggleListItem("Enabled", true);
+        this->_enabledBtn = new tsl::elm::ToggleListItem("Enabled", true);
     }
     else
     {
-        this->enabledBtn = new tsl::elm::ToggleListItem("Enabled", false);
+        this->_enabledBtn = new tsl::elm::ToggleListItem("Enabled", false);
     }
 }
 
 tsl::elm::Element* MainMenu::createUI()
 {
-    auto frame = new tsl::elm::OverlayFrame("NX-FanControl", "v1.0.0");
+    this->_tableIsChanged = false;
+
+    auto frame = new tsl::elm::OverlayFrame("NX-FanControl", "v1.0.1");
 
     auto list = new tsl::elm::List();
 
-    this->enabledBtn->setStateChangedListener([this](bool state)
+    this->_enabledBtn->setStateChangedListener([this](bool state)
     {
 	    if (state)
         {
@@ -48,63 +50,63 @@ tsl::elm::Element* MainMenu::createUI()
         }
 	    return false;
     });
-    list->addItem(this->enabledBtn);
+    list->addItem(this->_enabledBtn);
 
     list->addItem(new tsl::elm::CategoryHeader("Fan Curve", true));
-    this->p0Label->setClickListener([this](uint64_t keys)
+    this->_p0Label->setClickListener([this](uint64_t keys)
     {
 	    if (keys & HidNpadButton_A) 
         {
-			tsl::changeTo<SelectMenu>(0, this->fanCurveTable);
+			tsl::changeTo<SelectMenu>(0, this->_fanCurveTable, &this->_tableIsChanged);
 			return true;
 		}
 		return false; 
     });
-    list->addItem(this->p0Label);
+    list->addItem(this->_p0Label);
 
-    this->p1Label->setClickListener([this](uint64_t keys)
+    this->_p1Label->setClickListener([this](uint64_t keys)
     {
 	    if (keys & HidNpadButton_A) 
         {
-			tsl::changeTo<SelectMenu>(1, this->fanCurveTable);
+			tsl::changeTo<SelectMenu>(1, this->_fanCurveTable, &this->_tableIsChanged);
 			return true;
 		}
 		return false;
     });
-    list->addItem(this->p1Label);
+    list->addItem(this->_p1Label);
 
-    this->p2Label->setClickListener([this](uint64_t keys)
+    this->_p2Label->setClickListener([this](uint64_t keys)
     {
 	    if (keys & HidNpadButton_A) 
         {
-			tsl::changeTo<SelectMenu>(2, this->fanCurveTable);
+			tsl::changeTo<SelectMenu>(2, this->_fanCurveTable, &this->_tableIsChanged);
 			return true;
 		}
 		return false; 
     });
-    list->addItem(this->p2Label);
+    list->addItem(this->_p2Label);
 
-    this->p3Label->setClickListener([this](uint64_t keys)
+    this->_p3Label->setClickListener([this](uint64_t keys)
     {
 	    if (keys & HidNpadButton_A) 
         {
-		    tsl::changeTo<SelectMenu>(3, this->fanCurveTable);
+		    tsl::changeTo<SelectMenu>(3, this->_fanCurveTable, &this->_tableIsChanged);
 			return true;
 		}
 		return false; 
     });
-    list->addItem(this->p3Label);
+    list->addItem(this->_p3Label);
 
-    this->p4Label->setClickListener([this](uint64_t keys)
+    this->_p4Label->setClickListener([this](uint64_t keys)
     {
 	    if (keys & HidNpadButton_A) 
         {
-				tsl::changeTo<SelectMenu>(4, this->fanCurveTable);
+				tsl::changeTo<SelectMenu>(4, this->_fanCurveTable, &this->_tableIsChanged);
 				return true;
 	    }
 	    return false; 
     });
-    list->addItem(this->p4Label);
+    list->addItem(this->_p4Label);
 
     frame->setContent(list);
 
@@ -113,10 +115,14 @@ tsl::elm::Element* MainMenu::createUI()
 
 void MainMenu::update()
 {
-    ReadConfigFile(&(this->fanCurveTable));
-    this->p0Label->setText("P0: " + std::to_string(this->fanCurveTable->temperature_c) + "C | " + std::to_string((int)(this->fanCurveTable->fanLevel_f * 100)) + "%");
-    this->p1Label->setText("P1: " + std::to_string((this->fanCurveTable + 1)->temperature_c) + "C | " + std::to_string((int)((this->fanCurveTable + 1)->fanLevel_f * 100)) + "%");
-    this->p2Label->setText("P2: " + std::to_string((this->fanCurveTable + 2)->temperature_c) + "C | " + std::to_string((int)((this->fanCurveTable + 2)->fanLevel_f * 100)) + "%");
-    this->p3Label->setText("P3: " + std::to_string((this->fanCurveTable + 3)->temperature_c) + "C | " + std::to_string((int)((this->fanCurveTable + 3)->fanLevel_f * 100)) + "%");
-    this->p4Label->setText("P4: " + std::to_string((this->fanCurveTable + 4)->temperature_c) + "C | " + std::to_string((int)((this->fanCurveTable + 4)->fanLevel_f * 100)) + "%");
+    if(this->_tableIsChanged)
+    {
+        this->_p0Label->setText("P0: " + std::to_string(this->_fanCurveTable->temperature_c) + "C | " + std::to_string((int)(this->_fanCurveTable->fanLevel_f * 100)) + "%");
+        this->_p1Label->setText("P1: " + std::to_string((this->_fanCurveTable + 1)->temperature_c) + "C | " + std::to_string((int)((this->_fanCurveTable + 1)->fanLevel_f * 100)) + "%");
+        this->_p2Label->setText("P2: " + std::to_string((this->_fanCurveTable + 2)->temperature_c) + "C | " + std::to_string((int)((this->_fanCurveTable + 2)->fanLevel_f * 100)) + "%");
+        this->_p3Label->setText("P3: " + std::to_string((this->_fanCurveTable + 3)->temperature_c) + "C | " + std::to_string((int)((this->_fanCurveTable + 3)->fanLevel_f * 100)) + "%");
+        this->_p4Label->setText("P4: " + std::to_string((this->_fanCurveTable + 4)->temperature_c) + "C | " + std::to_string((int)((this->_fanCurveTable + 4)->fanLevel_f * 100)) + "%");
+        
+        this->_tableIsChanged = false;
+    }
 }
