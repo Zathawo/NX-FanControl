@@ -25,7 +25,7 @@ tsl::elm::Element* MainMenu::createUI()
 {
     this->_tableIsChanged = false;
 
-    auto frame = new tsl::elm::OverlayFrame("NX-FanControl", "v1.0.1");
+    auto frame = new tsl::elm::OverlayFrame("NX-FanControl", "v1.0.2");
 
     auto list = new tsl::elm::List();
 
