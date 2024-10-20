@@ -55,7 +55,7 @@ void __appInit(void)
     if (R_FAILED(rc))
         diagAbortWithResult(MAKERESULT(Module_Libnx, LibnxError_ShouldNotHappen));
 
-    rc = tsInitialize();
+    rc = i2cInitialize();
     if (R_FAILED(rc))
         diagAbortWithResult(MAKERESULT(Module_Libnx, LibnxError_ShouldNotHappen));
 
@@ -67,7 +67,7 @@ void __appExit(void)
 {
     CloseFanControllerThread();
     fanExit();
-    tsExit();
+    i2cExit();
     fsExit();
     fsdevUnmountAll();
 }
